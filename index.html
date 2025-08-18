@@ -11,23 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>::AVHB::Avionics Hover Broadcast-航播影音|白登铭摄影作品社区</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
         .video-container {
-            width: 90vw;
-            max-width: 1200px;
             position: relative;
+            width: 100%;
             padding-bottom: 56.25%; /* 16:9 宽高比 */
-            height: 0;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        iframe {
+        .video-iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -35,17 +28,76 @@
             height: 100%;
             border: none;
         }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .control-btn {
+            padding: 8px 15px;
+            background: #00aeec;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .control-btn:hover {
+            background: #0095d9;
+        }
+        .control-btn.active {
+            background: #ff3278;
+        }
     </style>
 </head>
 <body>
-    <div class="video-container">
-        <!-- 替换YOUR_VIDEO_ID为实际视频ID -->
-        <iframe src="https://player.youku.com/embed/XNTg5ODQwNTYzMg==" 
-                frameborder="0" 
-                allowfullscreen
-                allow="autoplay; fullscreen">
-        </iframe>
+    <div class="container">
+        <h1>B站视频嵌入演示</h1>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="updateVideo('quality')">切换高清模式</button>
+            <button class="control-btn" onclick="updateVideo('danmaku')">切换弹幕显示</button>
+            <button class="control-btn" onclick="updateVideo('autoplay')">切换自动播放</button>
+        </div>
+
+        <div class="video-container">
+            <!-- 默认参数：高清模式开启、弹幕关闭、不自动播放 -->
+            <iframe id="bili-video" class="video-iframe" 
+                src="https://www.bilibili.com/video/BV1VLaYe9Esf?t=0.0" 
+                scrolling="no" 
+                allowfullscreen="true"
+                sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts">
+            </iframe>
+        </div>
     </div>
+
+    <script>
+        const videoStates = {
+            quality: { param: 'high_quality', value: 1, text: '高清模式' },
+            danmaku: { param: 'danmaku', value: 0, text: '弹幕关闭' },
+            autoplay: { param: 'autoplay', value: 0, text: '自动播放关闭' }
+        };
+
+        function updateVideo(type) {
+            const state = videoStates[type];
+            state.value = state.value === 1 ? 0 : 1;
+            
+            const iframe = document.getElementById('bili-video');
+            const src = new URL(iframe.src);
+            src.searchParams.set(state.param, state.value);
+            iframe.src = src.toString();
+            
+            // 更新按钮状态
+            const buttons = document.querySelectorAll('.control-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(state.text)) {
+                    btn.textContent = btn.textContent.replace(/(开启|关闭)/, 
+                        state.value ? '开启' : '关闭');
+                    btn.classList.toggle('active', state.value);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
-<code_end>
