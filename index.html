@@ -52,17 +52,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>B站视频嵌入演示</h1>
-        
-        <div class="controls">
-            <button class="control-btn" onclick="updateVideo('quality')">切换高清模式</button>
-            <button class="control-btn" onclick="updateVideo('danmaku')">切换弹幕显示</button>
-            <button class="control-btn" onclick="updateVideo('autoplay')">切换自动播放</button>
-        </div>
 
         <div class="video-container">
-            <!-- 默认参数：高清模式开启、弹幕关闭、不自动播放 -->
             <iframe id="bili-video" class="video-iframe" 
                 src="https://player.bilibili.com/player.html?bvid=BV1VLaYe9Esf&high_quality=1&danmaku=0&autoplay=0" 
                 scrolling="no" 
@@ -72,32 +63,6 @@
         </div>
     </div>
 
-    <script>
-        const videoStates = {
-            quality: { param: 'high_quality', value: 1, text: '高清模式' },
-            danmaku: { param: 'danmaku', value: 0, text: '弹幕关闭' },
-            autoplay: { param: 'autoplay', value: 0, text: '自动播放关闭' }
-        };
-
-        function updateVideo(type) {
-            const state = videoStates[type];
-            state.value = state.value === 1 ? 0 : 1;
-            
-            const iframe = document.getElementById('bili-video');
-            const src = new URL(iframe.src);
-            src.searchParams.set(state.param, state.value);
-            iframe.src = src.toString();
-            
-            // 更新按钮状态
-            const buttons = document.querySelectorAll('.control-btn');
-            buttons.forEach(btn => {
-                if (btn.textContent.includes(state.text)) {
-                    btn.textContent = btn.textContent.replace(/(开启|关闭)/, 
-                        state.value ? '开启' : '关闭');
-                    btn.classList.toggle('active', state.value);
-                }
-            });
-        }
-    </script>
+   
 </body>
 </html>
