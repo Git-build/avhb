@@ -5,35 +5,47 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <html>
 <head>	
-
    <!-- 在HTML头部添加meta标签强制使用最高内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>::AVHB::Avionics Hover Broadcast-航播影音|白登铭摄影作品社区</title>
     <style>
-        body,html {
-            margin:0;
-            padding:0;
-            overflow:hidden;
-            background:#000;
-            height:100%;
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .video-container {
+            width: 90vw;
+            max-width: 1200px;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 宽高比 */
+            height: 0;
         }
         iframe {
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            border:none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <iframe src="https://player.youku.com/embed/YXNDI5NDI5MDQ4" 
-            allowfullscreen 
-            allow="autoplay; fullscreen">
-    </iframe>
+    <div class="video-container">
+        <!-- 替换YOUR_VIDEO_ID为实际视频ID -->
+        <iframe src="https://player.youku.com/embed/XNTg5ODQwNTYzMg==" 
+                frameborder="0" 
+                allowfullscreen
+                allow="autoplay; fullscreen">
+        </iframe>
+    </div>
 </body>
 </html>
 <code_end>
